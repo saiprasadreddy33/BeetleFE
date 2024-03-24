@@ -160,52 +160,76 @@
      }
  })
 
- function searchBlog() {
+ document.addEventListener('DOMContentLoaded', function () {
+    const loadMoreButton = document.querySelector('.w-pagination-next');
 
-     var input = document.getElementById('search-input').value.toLowerCase();
-     console.log(input)
-     if (!input) {
-         alert('Oops! Missed typing  something in the field. Please enter to search.')
-         return;
-     }
-     var items = document.getElementsByClassName('w-dyn-item');
-     console.log(items)
- 
-     var found = false;
- 
-     for (var i = 0; i < items.length; i++) {
-         var titleElement = items[i].querySelector('.blog-card-title');
-         var descriptionElement = items[i].querySelector('.blog-card-desc');
-         
-         if (titleElement && descriptionElement) {
-             var title = titleElement.innerText.toLowerCase();
-             var description = descriptionElement.innerText.toLowerCase();
-             
-             if (title.includes(input) || description.includes(input)) {
-                 items[i].style.display = 'block'; 
-                 found = true;
-             } else {
-                 items[i].style.display = 'none'; 
-             }
-         } else {
-             // Skip to the next iteration 
-             continue;
-         }
-     }
- 
-     if (found) {
-         alert('Oops! Something went wrong. Unable to find title or description for item ' + input);
-     }
- }
- 
- var allButton = document.querySelector('.all-button');
- var filtersCollectionList = document.querySelector('.filters-collection-list');
- 
- if (allButton && filtersCollectionList) {
-     filtersCollectionList.insertBefore(allButton, filtersCollectionList.firstChild);
- } else {
-     console.error("Could not find one or both of the specified elements.");
- }
+    loadMoreButton.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const hiddenPosts = document.querySelectorAll('.blog-card.w-inline-block[style="display: none;"]');
+        const visiblePosts = document.querySelectorAll('.blog-card.w-inline-block[style="display: block;"]');
+
+        if (visiblePosts.length == 3) {
+            alert("Can't load more. Please try again later.");
+            return; 
+        }
+
+        hiddenPosts.forEach(function (post, index) {
+            if (index < 3) {
+                post.style.display = 'block';
+            }
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const radioButtons = document.querySelectorAll('.resource-radio-field input[type="radio"]');
+
+    radioButtons.forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            console.log('Radio button clicked:', this.value);
+
+            const selectedCategory = this.value.toLowerCase();
+
+            const items = document.querySelectorAll('.w-dyn-item');
+            items.forEach(function (item) {
+                const categoryTag = item.querySelector('.blog-card-tag');
+                if (selectedCategory === 'all' || (categoryTag && categoryTag.textContent.trim().toLowerCase() === selectedCategory)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+
+function searchBlog() {
+    var input = document.getElementById('search-input').value.trim().toLowerCase();
+    if (!input) {
+        alert('Oops! Missed typing something in the field. Please enter to search.');
+        return;
+    }
+    var items = document.querySelectorAll('.w-dyn-item');
+    var found = false;
+    items.forEach(function (item) {
+        var titleElement = item.querySelector('.blog-card-title');
+        var descriptionElement = item.querySelector('.blog-card-desc');
+        if (titleElement && descriptionElement) {
+            var title = titleElement.innerText.trim().toLowerCase();
+            var description = descriptionElement.innerText.trim().toLowerCase();
+            if (title.includes(input) || description.includes(input)) {
+                item.style.display = 'block';
+                found = true;
+            } else {
+                item.style.display = 'none';
+            }
+        }
+    });
+    if (!found) {
+        alert('No matching posts found.');
+    }
+}
 
  
  
