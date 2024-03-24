@@ -171,7 +171,7 @@
 
         if (visiblePosts.length == 3) {
             alert("Can't load more. Please try again later.");
-            return; 
+            return;
         }
 
         hiddenPosts.forEach(function (post, index) {
@@ -201,11 +201,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         });
+        
+        radio.addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+    });
+
+    const initialSelectedCategory = document.querySelector('.resource-radio-field input[type="radio"]:checked').value.toLowerCase();
+
+    const items = document.querySelectorAll('.w-dyn-item');
+    items.forEach(function (item) {
+        const categoryTag = item.querySelector('.blog-card-tag');
+        if (initialSelectedCategory === 'all' || (categoryTag && categoryTag.textContent.trim().toLowerCase() === initialSelectedCategory)) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
     });
 });
 
 function searchBlog() {
     var input = document.getElementById('search-input').value.trim().toLowerCase();
+    console.log(input);
     if (!input) {
         alert('Oops! Missed typing something in the field. Please enter to search.');
         return;
@@ -213,22 +230,21 @@ function searchBlog() {
     var items = document.querySelectorAll('.w-dyn-item');
     var found = false;
     items.forEach(function (item) {
-        var titleElement = item.querySelector('.blog-card-title');
-        var descriptionElement = item.querySelector('.blog-card-desc');
-        if (titleElement && descriptionElement) {
-            var title = titleElement.innerText.trim().toLowerCase();
-            var description = descriptionElement.innerText.trim().toLowerCase();
-            if (title.includes(input) || description.includes(input)) {
-                item.style.display = 'block';
-                found = true;
-            } else {
-                item.style.display = 'none';
-            }
+        var categoryTag = item.querySelector('.blog-card-tag');
+        if (categoryTag && categoryTag.innerText.trim().toLowerCase().includes(input)) {
+            item.style.display = 'block';
+            found = true;
+        } else {
+            item.style.display = 'none';
         }
     });
     if (!found) {
         alert('No matching posts found.');
     }
+    var radioButtons = document.querySelectorAll('.resource-radio-field');
+    radioButtons.forEach(function (radioButton) {
+        radioButton.style.display = 'inline-block';
+    });
 }
 
  
