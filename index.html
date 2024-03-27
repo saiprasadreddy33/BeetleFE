@@ -479,6 +479,38 @@
                         font-size: 14px;
                     }
                 }
+                .dropdown-content {
+        display: none;
+    }
+
+    .dropdown-arrow:hover + .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-arrow::after {
+    content: '\27BE';
+    display: table;
+    padding: 0px 3px 4px 4px;
+    margin-left: 476px;
+    transition: transform 0.3s ease;
+}
+
+    .dropdown-arrow:hover::after {
+        content: '\25B4'; /* Upward-pointing triangle when arrow is hovered */
+        transform: rotate(180deg);
+    }
+    .calc-hero-info-contain {
+    z-index: 2;
+    width: 100%;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    background-color: #f5f5f500;
+    border-radius: 16px;
+    flex-direction: column;
+    padding: 32px 24px;
+    display: flex;
+    position: relative;
+}
             </style>
         </div>
         <section class="home-hero-section">
@@ -838,26 +870,51 @@
             <div class="container-1280px calculator-hero-container">
                 <div class="calc-hero-text-contain">
                     <h1 class="heading-56px calc-hero-heading">Find Signals That Close Deals</h1>
-                    <div class="paragraph-20px calc-hero-desc">Use this calculator to find how many signals or early
-                        indicators that can surface potential deals you otherwise may have missed can be surfaced with a
-                        relationship intelligence platform.</div><img
-                        src="https://assets-global.website-files.com/65502a2d4f72e4804b7894f3/659c0243dc2cefbdf6b4c770_ROI%20Vector.png"
+                    <img
+                        src="https://assets-global.website-files.com/6550s2a2d4f72e4804b7894f3/659c0243dc2cefbdf6b4c770_ROI%20Vector.png"
                         loading="lazy" alt="" class="roi-bg-vector" />
-                    <div class="calc-hero-info-contain">
-                        <div class="heading-24px calc-hero-info-point"><span class="bold-700">Number of Team
-                                Members:</span> How many people are in your firm’s deal team?</div>
-                        <div class="heading-24px calc-hero-info-point"><span class="bold-700">Size of Network:</span>
-                            How many contacts are in your network?</div>
-                        <div class="heading-24px calc-hero-info-point"><span class="bold-700">Number of Signals Per
-                                Contact:</span> How many signals (job changes, investments, mentions). <strong
-                                class="bold-700">Average:</strong> 1 signal per 2 contacts.</div>
-                        <div class="heading-24px calc-hero-info-point"><span class="bold-700">Percent of Legitimate
-                                Signals:</span> Signals that can lead you to reach out to a certain company. <strong
-                                class="bold-700">Average:</strong> 10%</div>
-                        <div class="heading-24px calc-hero-info-point"><span class="bold-700">Percent of Hard to
-                                Discover Signals:</span> Signals that can only be discovered with relationship
-                            intelligence technology. <strong class="bold-700">Average:</strong> 10 to 20%</div>
-                    </div>
+                        <div class="calc-hero-info-contain">
+                          <div class="calc-input-wrapper">
+                            <div class="heading-24px calc-hero-info-point">
+                              <span class="bold-700 dropdown-arrow">Number of Team Members</span>
+                              <span class="dropdown-content" id="dropdown-5">
+                                  How many people are in your firm’s deal team?
+                              </span>
+                          </div>
+                        </div>
+                        <div class="calc-input-wrapper">
+                          <div class="heading-24px calc-hero-info-point">
+                            <span class="bold-700 dropdown-arrow">Size of Network</span>
+                            <span class="dropdown-content" id="dropdown-1">
+                                How many contacts are in your network?
+                            </span>
+                        </div>
+                        </div>
+                        <div class="calc-input-wrapper">
+                          <div class="heading-24px calc-hero-info-point">
+                            <span class="bold-700 dropdown-arrow">Number of Signals Per Contact</span>
+                            <span class="dropdown-content" id="dropdown-2">
+                                How many signals (job changes, investments, mentions). <strong class="bold-700"><br>Average:</strong> 1 signal per 2 contacts?
+                            </span>
+                        </div>
+                        </div>
+                        <div class="calc-input-wrapper">
+                          <div class="heading-24px calc-hero-info-point">
+                            <span class="bold-700 dropdown-arrow">Percent of Legitimate Signals</span>
+                            <span class="dropdown-content" id="dropdown-3">
+                                Signals that can lead you to reach out to a certain company. <strong class="bold-700"><br>Average:</strong> 10%?
+                            </span>
+                        </div>
+                        </div>
+                        <div class="calc-input-wrapper">
+                          <div class="heading-24px calc-hero-info-point">
+                            <span class="bold-700 dropdown-arrow">Percent of Hard to Discover Signals</span>
+                            <span class="dropdown-content" id="dropdown-4">
+                                Signals that can only be discovered with relationship intelligence technology. <strong class="bold-700"><br>Average:</strong> 10 to 20%?
+                            </span>
+                        </div>
+                        </div>
+                      </div>
                 </div>
                 <div class="calc-hero-main">
                     <div class="calc-input-wrapper">
@@ -1162,6 +1219,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.10/typed.min.js"></script>
     <script src="script.js"></script>
     <script>
+    function toggleDropdown(id) {
+        var dropdown = document.getElementById('dropdown-' + id);
+        dropdown.classList.toggle('active');
+    }
+</script>
+    <script>
+    
         var typed = new Typed(".typed-words", {
             strings: ["Venture Capital", "Private Equity", "M&A", "Investment Banking", "Family Offices"],
             typeSpeed: 75,
